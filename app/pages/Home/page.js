@@ -368,17 +368,7 @@ const Home = () => {
         ))}
       </div>
 
-      {selectedCard && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modal}>
-            <span className={styles.closeButton} onClick={closeModal}>
-              &times;
-            </span>
-            <h2>{selectedCard}</h2>
-            <p>Find your voice, your movement, yourself. Opportunities for all levels in acting and dance, stagecraft, puppetry, playwriting, speechwriting, and more. Join one of many clubs to explore even further.</p>
-          </div>
-        </div>
-      )}
+     
       </div>
 
       <div className={styles.mainCard}>
