@@ -1,0 +1,325 @@
+.contentContainer {
+  width: 100%;
+  overflow-x: hidden;
+
+  // Hero Section
+  .heroSection {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+      height: 40vh;
+      min-height: 300px;
+    }
+
+    .heroImage {
+      width: 100%;
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .heroOverlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, rgba(87, 81, 225, 0.9) 0%, rgba(70, 71, 177, 0.9) 100%);
+      padding: 40px 20px;
+
+      h1 {
+        max-width: 1200px;
+        margin: 0 auto;
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        text-align: center;
+
+        @media (max-width: 768px) {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  // Introduction Section
+  .introSection {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+
+    @media (max-width: 768px) {
+      padding: 40px 16px;
+    }
+
+    .introContent {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .introText, .actionText {
+        p {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: #555;
+          margin-bottom: 20px;
+
+          @media (max-width: 768px) {
+            font-size: 0.95rem;
+          }
+        }
+      }
+
+     
+    }
+  }
+
+  // Expandable Cards Section
+  .cardsSection {
+    padding: 60px 20px;
+    background: #fff;
+
+    @media (max-width: 768px) {
+      padding: 40px 16px;
+    }
+
+    .sectionHeader {
+      text-align: center;
+      margin-bottom: 48px;
+
+      h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 12px;
+
+        @media (max-width: 768px) {
+          font-size: 1.8rem;
+        }
+      }
+
+      p {
+        font-size: 1rem;
+        color: #888;
+      }
+    }
+
+    .cardGrid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      @media (min-width: 769px) and (max-width: 1023px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .cardContainer {
+      width: 100%;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      &.expanded {
+        box-shadow: 0 8px 24px rgba(87, 81, 225, 0.2);
+        border: 1px solid rgba(87, 81, 225, 0.2);
+      }
+
+      .cardHeader {
+        padding: 20px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+
+        h3 {
+          color: white;
+          font-size: 1.2rem;
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .expandIcon {
+          color: white;
+          font-size: 1.5rem;
+          font-weight: 600;
+          transition: transform 0.3s ease;
+        }
+      }
+
+      .cardContent {
+        padding: 24px;
+        animation: slideDown 0.3s ease;
+
+        p {
+          color: #555;
+          font-size: 0.95rem;
+          line-height: 1.6;
+          margin-bottom: 20px;
+        }
+
+        .expandBtn {
+          background: #5751e1;
+          color: white;
+          border: none;
+          padding: 8px 20px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          width: 100%;
+
+          &:hover {
+            background: #4647b1;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+
+  // Modal Overlay
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modalContent {
+    background: #2d2d2d;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+
+    @media (max-width: 768px) {
+      padding: 30px 20px;
+    }
+
+    .closeBtn {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    h2 {
+      color: #5751e1;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+
+      @media (max-width: 768px) {
+        font-size: 1.5rem;
+      }
+    }
+
+    p {
+      color: #ccc;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .modalActionBtn {
+      background: #5751e1;
+      color: white;
+      border: none;
+      padding: 10px 28px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #4647b1;
+        transform: scale(1.02);
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

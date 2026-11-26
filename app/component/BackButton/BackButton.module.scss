@@ -1,0 +1,44 @@
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 10px 20px;
+  border-radius: 40px;
+  background: #fff;
+  color: #5751e1;
+  border: 1.5px solid #5751e1;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(87, 81, 225, 0.12);
+  transition: all 0.3s ease;
+
+  svg {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #5751e1 0%, #4340b5 100%);
+    color: #fff;
+    border-color: transparent;
+
+    svg {
+      transform: translateX(-3px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(87, 81, 225, 0.4);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 9px 16px;
+    font-size: 0.82rem;
+  }
+}

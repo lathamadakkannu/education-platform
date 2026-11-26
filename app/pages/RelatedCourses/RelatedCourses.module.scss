@@ -1,0 +1,272 @@
+.relatedCourses {
+  width: 100%;
+  padding: 60px 0;
+  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+
+      .subtitle {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #5751e1;
+        margin-bottom: 12px;
+      }
+
+      h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #1a1a1a;
+        position: relative;
+        display: inline-block;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -12px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background: #5751e1;
+          border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 28px;
+        }
+      }
+    }
+
+    .coursesGrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+      }
+
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+      }
+
+      .courseCard {
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 30px rgba(87, 81, 225, 0.15);
+        }
+
+        .cardInner {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .cardImage {
+          position: relative;
+          width: 100%;
+          height: 200px;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+          }
+
+          &:hover img {
+            transform: scale(1.05);
+          }
+
+          .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 1;
+
+            .discountBadge {
+              background: #ff4444;
+              color: white;
+              font-size: 12px;
+              font-weight: 700;
+              padding: 4px 10px;
+              border-radius: 20px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+          }
+        }
+
+        .cardContent {
+          padding: 20px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+
+          .ratingSection {
+            margin-bottom: 12px;
+
+            .stars {
+              display: flex;
+              align-items: center;
+              gap: 3px;
+
+              svg {
+                font-size: 14px;
+                color: #ffc107;
+              }
+
+              .ratingValue {
+                font-size: 12px;
+                color: #666;
+                margin-left: 6px;
+              }
+            }
+          }
+
+          .courseTitle {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 42px;
+          }
+
+          .courseMeta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+
+            .metaItem {
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              font-size: 13px;
+              color: #888;
+
+              svg {
+                font-size: 14px;
+                color: #5751e1;
+              }
+            }
+          }
+
+          .divider {
+            height: 1px;
+            background: #e8e8e8;
+            margin-bottom: 16px;
+          }
+
+          .priceSection {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: auto;
+
+            .pricing {
+              display: flex;
+              align-items: baseline;
+              gap: 8px;
+
+              .currentPrice {
+                font-size: 20px;
+                font-weight: 700;
+                color: #5751e1;
+              }
+
+              .originalPrice {
+                font-size: 14px;
+                font-weight: 500;
+                color: #bbb;
+                text-decoration: line-through;
+              }
+            }
+
+            .addToCartBtn {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              padding: 8px 16px;
+              background: #5751e1;
+              color: white;
+              border: none;
+              border-radius: 8px;
+              font-size: 13px;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.3s ease;
+
+              &:hover {
+                background: #4647b1;
+                transform: scale(1.02);
+              }
+
+              svg {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Additional Responsive Adjustments
+@media (max-width: 480px) {
+  .relatedCourses {
+    padding: 40px 0;
+
+    .container {
+      .coursesGrid {
+        .courseCard {
+          .cardContent {
+            padding: 16px;
+
+            .courseTitle {
+              font-size: 14px;
+            }
+
+            .priceSection {
+              flex-direction: column;
+              align-items: stretch;
+
+              .addToCartBtn {
+                justify-content: center;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,392 @@
+// Navbar.module.scss
+
+$primary-color:   #ffffff;
+$hover-color:     #5751e1;
+$transition-speed: 0.3s;
+$box-shadow:      rgba(149, 157, 165, 0.2) 0px 8px 24px;
+$dropdown-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+// ─── Navbar shell ──────────────────────────────────────────────────────────
+
+.navbarMain {
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 9999;
+}
+
+.navbarContainer {
+  background-color: $primary-color;
+  padding: 15px 20px;
+  box-shadow: $box-shadow;
+  @media (max-width: 854px) { padding: 10px 15px; }
+}
+
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// ─── Left side ─────────────────────────────────────────────────────────────
+
+.navIcons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.logo a { display: block; }
+
+.menuToggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #333;
+  @media (max-width: 854px) { display: block; }
+}
+
+.icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color $transition-speed;
+  &:hover { color: $hover-color; }
+}
+
+.dropdownIcon { font-size: 0.7rem; margin-left: 4px; }
+
+.navItems {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+
+  li {
+    position: relative;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #333;
+    align-items: center;
+    gap: 4px;
+    transition: color $transition-speed;
+    border-radius: 8px;
+    &:hover { color: $hover-color; background: rgba(87, 81, 225, 0.06); }
+    a { color: inherit; text-decoration: none; font-size: inherit; font-weight: inherit; }
+  }
+
+  @media (max-width: 854px) {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: -15px;
+    right: -15px;
+    z-index: 20;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: auto;
+    background: white;
+    padding: 8px 0;
+    border-top: 1px solid #eee;
+    box-shadow: $box-shadow;
+    &.active { display: flex; }
+    li { width: 100%; border-radius: 0; padding: 12px 20px; }
+  }
+}
+
+.hasDropdown { user-select: none; }
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: white;
+  border-radius: 10px;
+  box-shadow: $dropdown-shadow;
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+  min-width: 160px;
+  z-index: 100;
+
+  li {
+    padding: 0;
+    &:hover { background: none; }
+    a {
+      display: block;
+      padding: 9px 16px;
+      font-size: 0.88rem;
+      color: #333;
+      &:hover { color: $hover-color; background: rgba(87, 81, 225, 0.06); }
+    }
+  }
+
+  @media (max-width: 854px) {
+    position: static;
+    box-shadow: none;
+    border-top: 1px solid #f0f0f0;
+    padding-left: 16px;
+  }
+}
+
+// ─── Right side — Auth ─────────────────────────────────────────────────────
+
+.rightMenu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #333;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  &:hover { background: rgba(87, 81, 225, 0.06); }
+}
+
+.helloText {
+  font-size: 0.88rem;
+  color: #555;
+  strong { color: #5751e1; font-weight: 700; }
+}
+
+.signInBtn {
+  background: linear-gradient(135deg, #5751e1, #764ba2);
+  color: white;
+  border: none;
+  padding: 8px 22px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  &:hover { opacity: 0.85; }
+}
+
+.logoutBtn {
+  background: transparent;
+  border: 1.5px solid #e53e3e;
+  color: #e53e3e;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  &:hover { background: #e53e3e; color: white; }
+}
+
+// ─── Login Modal ───────────────────────────────────────────────────────────
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  background: white;
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.25s ease;
+  @media (max-width: 480px) { margin: 0 16px; padding: 28px 20px; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 854px) {
+  .navIcons {
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .logo img {
+    width: 125px;
+    height: auto;
+  }
+
+  .rightMenu {
+    gap: 6px;
+  }
+
+  .signInBtn {
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo img {
+    width: 108px;
+  }
+
+  .navbarContainer {
+    padding: 9px 12px;
+  }
+
+  .userInfo {
+    padding: 6px;
+  }
+
+  .helloText {
+    display: none;
+  }
+
+  .logoutBtn {
+    padding: 6px 9px;
+  }
+}
+
+.modalClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #f0f0f0;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 0.8rem;
+  transition: background 0.2s;
+  &:hover { background: #e0e0e0; }
+}
+
+.modalHeader {
+  text-align: center;
+  margin-bottom: 24px;
+  h2 { font-size: 1.4rem; font-weight: 800; color: #1a1a2e; margin: 10px 0 4px; }
+  p  { font-size: 0.85rem; color: #888; margin: 0; }
+}
+
+.modalIcon { font-size: 3rem; background: linear-gradient(135deg, #4f46e5, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.loginForm { display: flex; flex-direction: column; gap: 16px; }
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label { font-size: 13px; font-weight: 600; color: #334155; }
+
+  input {
+    padding: 10px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    &:focus { border-color: #5751e1; }
+    &.invalidField { border-color: #dc2626; }
+  }
+
+  .fieldError {
+    color: #b91c1c;
+    font-size: 0.78rem;
+  }
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  input { padding-right: 40px; }
+}
+
+.eyeToggle {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  user-select: none;
+}
+
+.fieldError {
+  color: #b91c1c;
+  font-size: 0.78rem;
+}
+
+.errorMsg {
+  background: #fff0f0;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+}
+
+.submitLoginBtn {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 40px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  &:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4); }
+}
+
+.successToast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 100001;
+  padding: 14px 20px;
+  border: 1px solid #a7f3d0;
+  border-radius: 12px;
+  background: #ecfdf5;
+  color: #047857;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  font-weight: 600;
+}
