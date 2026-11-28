@@ -497,3 +497,84 @@
     }
   }
 }
+
+// ─── Mobile: every section uses the same width and side gutters ────────────
+@media (max-width: 768px) {
+  .about {
+    width: 100%;
+    max-width: 100%;
+    padding: 24px 16px;
+    overflow-x: hidden;
+
+    .heroSection,
+    .welcomeSection,
+    .approachSection,
+    .functionSection,
+    .capabilitiesSection,
+    .teamSection {
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 40px;
+    }
+
+    .heroSection {
+      gap: 24px;
+    }
+
+    // Boxed (background) sections keep the same outer width as the text sections;
+    // only the inside padding is reduced.
+    .welcomeSection,
+    .functionSection {
+      padding: 24px 16px;
+      border-radius: 16px;
+      gap: 24px;
+    }
+
+    .approachSection {
+      gap: 24px;
+    }
+
+    .welcomeSection .welcomeContent p {
+      max-width: 100%;
+    }
+
+    .missionVision {
+      gap: 16px;
+
+      .missionCard,
+      .visionCard {
+        padding: 20px;
+      }
+    }
+
+    .capabilitiesGrid {
+      gap: 16px;
+
+      .capabilityItem {
+        padding: 16px;
+        gap: 14px;
+
+        &:hover {
+          transform: none;
+        }
+      }
+    }
+
+    .teamSection {
+      .teamSlider {
+        gap: 8px;
+      }
+
+      .sliderBtn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .teamCard {
+        padding: 0 6px;
+      }
+    }
+  }
+}

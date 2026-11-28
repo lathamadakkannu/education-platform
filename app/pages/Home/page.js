@@ -235,6 +235,11 @@ const Home = () => {
     };
   }, []);
 
+  // Keep the slider position valid when the screen size changes (e.g. rotate phone)
+  useEffect(() => {
+    setCurrentIndex((index) => Math.min(index, Math.max(0, cards.length - cardsPerView)));
+  }, [cardsPerView, cards.length]);
+
   // Calculate maximum index - MOVE THIS FUNCTION BEFORE nextSlide
   const getMaxIndex = () => {
     return Math.max(0, cards.length - cardsPerView);
@@ -252,13 +257,30 @@ const Home = () => {
     }
   };
 
+  // Touch swipe for the Latest Courses slider (mobile)
+  const touchStartRef = useRef({ x: 0, y: 0 });
+
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (e) => {
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - touchStartRef.current.x;
+    const dy = touch.clientY - touchStartRef.current.y;
+    // Only treat clearly-horizontal swipes as slide changes
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) nextSlide();
+    else prevSlide();
+  };
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     number: "",
   });
   const [registrationErrors, setRegistrationErrors] = useState({});
-  const [registrationSuccess, setRegistrationSuccess] = useState("");
   const [showJoinInfo, setShowJoinInfo] = useState(false);
 
   const getRegistrationError = (name, value) => {
@@ -288,10 +310,8 @@ const Home = () => {
 
     const message = "Registration submitted successfully!";
     showToast(message);
-    setRegistrationSuccess(message);
     setFormData({ name: "", email: "", number: "" });
     setRegistrationErrors({});
-    setTimeout(() => setRegistrationSuccess(""), 3500);
   };
 
   const eventData = [
@@ -356,50 +376,50 @@ const Home = () => {
       </div>
 
       <div className={styles.homeContent}>
-  <div className={styles.container}>
-    <div className={styles.sectionHeader}>
-      <span className={styles.sectionBadge}>Why Choose Us</span>
-      <h2 className={styles.sectionTitle}>Transform Your Learning Experience</h2>
-      <p className={styles.sectionSubtitle}>
-        Join thousands of students who are already advancing their careers with our expert-led courses
-      </p>
-    </div>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionBadge}>Why Choose Us</span>
+            <h2 className={styles.sectionTitle}>Transform Your Learning Experience</h2>
+            <p className={styles.sectionSubtitle}>
+              Join thousands of students who are already advancing their careers with our expert-led courses
+            </p>
+          </div>
 
-    <div className={styles.homeContentContainer}>
-      {cardData.map((card, index) => (
-        <div key={index} className={`${styles.homeCard} ${styles[`card${index + 1}`]}`}>
-          <div className={styles.cardGradient}></div>
-        
-          <div className={styles.homeCardContent}>
-        
-            <h2>{card.title}</h2>
-            <p>{card.description}</p>
-            <button className={styles[card.buttonClass]}>
-              <Link href='/pages/Business'>
-                {card.buttonText} 
-                <span className={styles.buttonArrow}>→</span>
-              </Link>
-            </button>
+          <div className={styles.homeContentContainer}>
+            {cardData.map((card, index) => (
+              <div key={index} className={`${styles.homeCard} ${styles[`card${index + 1}`]}`}>
+                <div className={styles.cardGradient}></div>
+
+                <div className={styles.homeCardContent}>
+
+                  <h2>{card.title}</h2>
+                  <p>{card.description}</p>
+                  <button className={styles[card.buttonClass]}>
+                    <Link href='/pages/Business'>
+                      {card.buttonText}
+                      <span className={styles.buttonArrow}>→</span>
+                    </Link>
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            <div className={styles.card2}>
+              <div className={styles.card2Overlay}></div>
+              <div className={styles.card2Content}>
+                <div className={styles.welcomeBadge}>
+                  <span className={styles.sparkle}>✨</span>
+                  Special Offer
+                </div>
+                <h3>You Are Welcome!</h3>
+                <p>Discover our Top School Child Benefits & Exclusive Programs</p>
+
+
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
-      
-      <div className={styles.card2}>
-        <div className={styles.card2Overlay}></div>
-        <div className={styles.card2Content}>
-          <div className={styles.welcomeBadge}>
-            <span className={styles.sparkle}>✨</span>
-            Special Offer
-          </div>
-          <h3>You Are Welcome!</h3>
-          <p>Discover our Top School Child Benefits & Exclusive Programs</p>
-          
-         
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
       <div className={styles.homeWelcome}>
         <div className={styles.homeWelcomeContent}>
@@ -499,7 +519,11 @@ const Home = () => {
               </Link>
             </div>
 
-            <div className={styles.sliderWrapper}>
+            <div
+              className={styles.sliderWrapper}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               <div
                 className={styles.cardWrapper}
                 style={{
@@ -687,7 +711,6 @@ const Home = () => {
                   <button type="submit">Register Now</button>
                 </div>
               </form>
-              {registrationSuccess && <p className={styles.registrationSuccess} role="status">{registrationSuccess}</p>}
             </div>
           </div>
 
@@ -755,7 +778,7 @@ const Home = () => {
             <h2>Rolling Admissions now open</h2>
             <p>Get in touch with us to discuss it:</p>
             <button><FaPhone />+91 12345 67890</button>
-           
+
           </div>
           <div className={styles.admissionImg}>
             <Image src="/image/admission.png" width={200} height={100} alt="admission" />

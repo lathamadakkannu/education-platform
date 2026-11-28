@@ -785,3 +785,23 @@
     }
   }
 }
+
+// ─── Mobile: consistent gutters (banner + content line up) ─────────────────
+@media (max-width: 768px) {
+  .coursesDetails {
+    .backBar {
+      padding: 16px 16px 0;
+    }
+
+    .coursesDetailsBanner {
+      margin: 12px 16px;
+    }
+
+    .coursesDetailsContainer {
+      width: 100%;
+      max-width: 100%;
+      padding: 0 16px;
+      margin-top: -40px;
+    }
+  }
+}

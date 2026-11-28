@@ -1072,3 +1072,54 @@
   .welcomeBanner { flex-direction: column; text-align: center; }
   .welcomeAvatar { width: 70px; height: 70px; font-size: 1.6rem; }
 }
+
+/* ─── Mobile: top bar buttons go on their own row under the page title ───── */
+
+@media (max-width: 768px) {
+  .topBar {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 12px;
+    padding: 12px 16px;
+  }
+
+  // Row 1: hamburger + page title (Dashboard / Wishlist / ...)
+  .topBarTitle {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 1.15rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Row 2: "Back to Home" + "Logout" side by side, full width
+  .topBarRight {
+    order: 3;
+    flex: 0 0 100%;
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: nowrap;
+    gap: 10px;
+
+    .backHomeBtn,
+    .topUser,
+    .loginBtn {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .backHomeBtn,
+    .logoutBtn,
+    .loginBtn {
+      width: 100%;
+      justify-content: center;
+      padding: 9px 12px;
+      font-size: 0.82rem;
+    }
+
+    .topUser {
+      display: flex;
+    }
+  }
+}

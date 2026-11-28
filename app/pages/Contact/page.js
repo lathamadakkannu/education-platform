@@ -33,7 +33,6 @@ const Contact = () => {
     });
 
     const [errors, setErrors] = useState({});
-    const [success, setSuccess] = useState("");
     const { showToast } = useApp();
 
     const validateField = (name, value) => {
@@ -62,7 +61,6 @@ const Contact = () => {
 
         const msg = "Your message has been sent successfully!";
         showToast(msg);
-        setSuccess(msg);
 
         setFormData({
             name: "",
@@ -72,10 +70,6 @@ const Contact = () => {
             message: "",
         });
         setErrors({});
-
-        setTimeout(() => {
-            setSuccess("");
-        }, 3500);
     };
 
     return (
@@ -198,8 +192,6 @@ const Contact = () => {
                                 Send Message
                             </button>
                         </div>
-
-                        {success && <div className={styles.successMessage}>{success}</div>}
                     </div>
                 </form>
             </div>

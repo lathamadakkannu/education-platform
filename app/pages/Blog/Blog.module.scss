@@ -174,3 +174,15 @@
     }
   }
 }
+
+// ─── Mobile: same full width + equal side gutters as every other page ──────
+@media (max-width: 768px) {
+  .blogContainer {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

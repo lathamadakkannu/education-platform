@@ -1144,14 +1144,8 @@
 // Responsive Design
 @media (max-width: 1024px) {
   .mainCard .cardSlider {
-    .cardWrapper {
-      gap: 20px;
-      
-      .cardItem {
-        flex: 0 0 calc((100% - 20px) / 2);
-      }
-    }
-    
+    --gap: 20px;
+
     .navButton {
       width: 40px;
       height: 40px;
@@ -1184,14 +1178,10 @@
         }
       }
       
-      .cardWrapper {
-        gap: 16px;
-        
-        .cardItem {
-          flex: 0 0 calc(100% - 0px);
-        }
-      }
-      
+      // The slide offset is calculated from --gap, so change the variable
+      // (not the CSS `gap`) or the cards drift out of alignment.
+      --gap: 16px;
+
       .navButton {
         display: none;
       }
@@ -1909,6 +1899,213 @@
         
         .contactInfo p {
           justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+// ─── Mobile (≤768px): same gutters everywhere + slider / registration polish ─
+@media (max-width: 768px) {
+  // Hero: `background-attachment: fixed` is unreliable on phones
+  .home {
+    height: auto;
+    min-height: 60vh;
+    background-attachment: scroll;
+
+    .homeContainer {
+      padding: 32px 16px;
+
+      .homeContainerDiv {
+        width: 100%;
+        padding: 24px 20px;
+      }
+    }
+  }
+
+  .homeContent .container {
+    padding: 0 16px;
+  }
+
+  .homeWelcome {
+    width: 100%;
+    padding: 40px 16px;
+    gap: 24px;
+  }
+
+  .homeEducaiton {
+    .educationContents .educationContent {
+      padding: 30px 16px;
+    }
+
+    .educationCards {
+      padding: 20px 16px;
+      max-width: 100%;
+
+      .educationCard {
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+  }
+
+  .homeAdmission .container,
+  .homeAdmission > div {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  // ── Latest Courses slider ──
+  .mainCard {
+    margin-bottom: 24px;
+    padding: 24px 0;
+    border-radius: 20px;
+
+    .cardContainer {
+      padding: 0 16px;
+      max-width: 100%;
+    }
+
+    .cardSlider {
+      width: 100%;
+      margin: 0;
+
+      .cardSilderHead {
+        padding: 8px 0 24px;
+
+        h2 {
+          font-size: 1.7rem;
+        }
+
+        p {
+          padding: 0;
+          margin-top: 22px;
+        }
+
+        p br {
+          display: none;
+        }
+      }
+
+      .sliderWrapper {
+        padding: 8px 0 24px;
+        touch-action: pan-y; // vertical scroll stays native, horizontal = swipe
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      .cardWrapper .cardItem .cardLink {
+        border-radius: 18px;
+
+        &:hover {
+          transform: none;
+        }
+
+        .cardImage {
+          height: 190px;
+        }
+
+        &:hover .cardImage {
+          transform: none;
+        }
+
+        .sliderCard {
+          padding: 16px 16px 8px;
+
+          .cardTitle {
+            font-size: 1rem;
+            min-height: 0;
+          }
+        }
+
+        .cardDoc {
+          padding: 0 16px;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .line {
+          margin: 0 16px;
+        }
+
+        .amount {
+          padding: 14px 16px 16px;
+        }
+      }
+
+      .sliderDots {
+        margin-top: 4px;
+        padding-bottom: 8px;
+      }
+    }
+
+    .cardBtn {
+      padding: 0 0 16px;
+      margin-top: 0;
+    }
+  }
+
+  // ── News ──
+  .news {
+    .newsBannerHead {
+      padding: 28px 0;
+
+      .margin {
+        width: 100%;
+        padding: 0 16px;
+      }
+    }
+
+    .newsContainer {
+      width: 100%;
+      padding: 32px 16px;
+      gap: 24px;
+    }
+  }
+
+  // ── Online Registration + Events ──
+  .homeRegister {
+    padding: 24px 16px; // was 60px 20px: smaller top/bottom space on phones
+
+    .homeRegisterContainer {
+      gap: 20px;
+
+      .homeRegisterForm,
+      .homeEvents {
+        padding: 24px 16px;
+        border-radius: 16px;
+      }
+
+      .homeRegisterForm {
+        .registerFormHead {
+          margin-bottom: 20px;
+
+          h2 {
+            font-size: 1.6rem;
+          }
+        }
+
+        .registerForm form .formGroup {
+          margin-bottom: 16px;
+        }
+      }
+
+      .homeEvents .homeEventsHead {
+        margin-bottom: 20px;
+
+        h2 {
+          font-size: 1.6rem;
+        }
+      }
+
+      .homeEvents .homeEventContents .homeEventContent .homeEventCont {
+        padding: 14px;
+        gap: 14px;
+
+        &:hover {
+          transform: none;
         }
       }
     }

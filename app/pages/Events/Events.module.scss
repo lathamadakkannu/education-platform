@@ -252,3 +252,12 @@
     }
   }
 }
+
+// ─── Mobile: consistent gutters ────────────────────────────────────────────
+@media (max-width: 768px) {
+  .events .contentSection {
+    width: 100%;
+    max-width: 100%;
+    padding: 24px 16px;
+  }
+}

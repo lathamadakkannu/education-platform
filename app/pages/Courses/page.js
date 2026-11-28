@@ -1,14 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Courses.module.scss";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useRouter } from "next/navigation";
-import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+import { FaStar, FaRegStar, FaStarHalfAlt, FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import ScrollToTop from "@/app/component/ScrollToTop/ScrollToTop";
 
 const Courses = () => {
-  const [isFilterVisible, setIsFilterVisible] = useState(true);
+  // null = not decided yet (CSS default: open on desktop, closed on mobile)
+  const [isFilterVisible, setIsFilterVisible] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({
     category: [],
     rating: [],
@@ -28,9 +29,36 @@ const Courses = () => {
     router.push(`/pages/Courses/CoursesDetails?id=${courseId}`);
   };
 
+  const MOBILE_BREAKPOINT = 768;
+
+  // Mobile: filters start closed so the course list is the first thing people see.
+  // Desktop: filter sidebar stays open.
+  useEffect(() => {
+    setIsFilterVisible(window.innerWidth > MOBILE_BREAKPOINT);
+  }, []);
+
   const handleToggleFilter = () => {
-    setIsFilterVisible((prev) => !prev);
+    setIsFilterVisible((prev) => !(prev ?? window.innerWidth > MOBILE_BREAKPOINT));
   };
+
+  const handleCloseFilter = () => setIsFilterVisible(false);
+
+  // Close the drawer if the screen grows to desktop size, and lock page scroll while it is open on mobile
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > MOBILE_BREAKPOINT) setIsFilterVisible(true);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    const lock = isFilterVisible && window.innerWidth <= MOBILE_BREAKPOINT;
+    document.body.style.overflow = lock ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isFilterVisible]);
 
   const toggleDropdown = (dropdownName) => {
     setOpenDropdown(openDropdown === dropdownName ? null : dropdownName);
@@ -200,14 +228,41 @@ const Courses = () => {
           <h2>
             Explore <span>courses we</span> think  you'll be interested in.
           </h2>
-          <button className={styles.toggleButton} onClick={handleToggleFilter}>
-            {isFilterVisible ? "Hide Filter" : "Show Filter"}
+          <button
+            type="button"
+            className={styles.toggleButton}
+            onClick={handleToggleFilter}
+            aria-expanded={Boolean(isFilterVisible)}
+          >
+            {isFilterVisible ? "Hide Filters" : "Show Filters"}
           </button>
         </div>
 
         <div className={styles.coursesContent}>
+          {/* Mobile backdrop: tap outside the drawer to close it */}
+          <div
+            className={`${styles.filterOverlay} ${isFilterVisible ? styles.overlayVisible : ""}`}
+            onClick={handleCloseFilter}
+            aria-hidden="true"
+          />
+
           {/* Filters Sidebar */}
-          <div className={`${styles.coursesFilter} ${isFilterVisible ? styles.visible : styles.hidden}`}>
+          <div
+            className={`${styles.coursesFilter} ${
+              isFilterVisible === null ? styles.auto : isFilterVisible ? styles.visible : styles.hidden
+            }`}
+          >
+            <div className={styles.filterDrawerHead}>
+              <h3>Filters</h3>
+              <button
+                type="button"
+                className={styles.filterCloseBtn}
+                onClick={handleCloseFilter}
+                aria-label="Close filters"
+              >
+                <FaTimes />
+              </button>
+            </div>
             <button
               className={styles.clearFiltersBtn}
               onClick={clearAllFilters}
@@ -440,6 +495,13 @@ const Courses = () => {
               )}
             </div>
 
+            <button
+              type="button"
+              className={styles.applyFiltersBtn}
+              onClick={handleCloseFilter}
+            >
+              Show {filteredCards.length} {filteredCards.length === 1 ? "course" : "courses"}
+            </button>
           </div>
 
           {/* Courses Cards Section */}
